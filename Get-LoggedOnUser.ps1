@@ -7,7 +7,6 @@
     .PARAMETER ComputerName
     Provide a remote computer name. 
     
-    
     .EXAMPLE
     Get-LoggedOnUser
 

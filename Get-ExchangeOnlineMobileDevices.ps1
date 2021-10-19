@@ -1,9 +1,4 @@
-﻿function Get-ExchangeOnlineMobileDevices{
-    param
-    (
-        
-
-
+﻿
 Connect-ExchangeOnline
 #Variables
 $CSV = "C:\temp\MobileDevices.csv"

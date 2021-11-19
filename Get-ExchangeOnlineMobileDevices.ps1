@@ -1,7 +1,7 @@
-﻿y
+﻿#ADD
 Connect-ExchangeOnline
 #Variables
-$CSV = "C:\temp\MobileDevices.csv"
+$CSV = ""
 $Result = @()
 $UserMailbox = Get-Mailbox -Resultsize unlimited
 $MobileDevice = @()
@@ -39,5 +39,5 @@ $MobileDevices = Get-MobileDevice -Mailbox $UPN
  
 $Result | Select-Object Name,UPN,FriendlyName,DisplayName,ClientType,ClientVersion,DeviceId,DeviceMobileOperator,DeviceModel,DeviceOS,DeviceType | Export-Csv -NoTypeInformation -Path $csv
 
-}#function close
+#}#function close
 Disconnect-ExchangeOnline

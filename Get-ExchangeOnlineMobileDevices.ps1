@@ -1,4 +1,4 @@
-﻿
+﻿y
 Connect-ExchangeOnline
 #Variables
 $CSV = "C:\temp\MobileDevices.csv"

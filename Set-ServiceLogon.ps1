@@ -9,11 +9,7 @@ function Set-ServiceLogon {
         [string]$Computername,
         [string]$ErrorLogFilePath
     )
-
-    Invoke-Command -ComputerName $Computername -ScriptBlock {Set-CimInstance Win32_Service }
-
-
-
+    
 foreach ($Computer in $ComputerName){
     $Option = New-CimSessionOption -Protocol Wsman
     $Session = New-CimSession -SessionOption $option -ComputerName $Computer

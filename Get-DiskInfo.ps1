@@ -1,4 +1,4 @@
-#TOADD
+#ADD
 
 function Get-DCDiskInfo
 {

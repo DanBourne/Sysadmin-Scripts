@@ -1,7 +1,7 @@
 ﻿function Get-ActiveSession {
     <#
     .SYNOPSIS
-    Return the currently logged in user for a remote or local machine.
+    Return the currently logged in user for a local or one or more remote machines.
     Uses CIMSession for speed purposes on local sessions, otherwise define -RemoteSession.
 
     .PARAMETER ComputerName
@@ -14,15 +14,22 @@
     Use to specify remote RDP sessions.
 
     .EXAMPLE
-    #Get the active session on the local host.
+    Get the active session on the local host.
+
     Get-ActiveSession -ComputerName localhost
 
     .EXAMPLE
-    #Get the active remote session on Server1.
+    Get the active remote session on Server1.
+
     Get-ActiveSession -Computername Server1 -RemoteSession
     
     .EXAMPLE
-    #Return all AD computers and pipe to retrieve all locally logged on users of these machines.
+    Get active local sessions on Server1, DC1 and FS3.
+
+    Get-ActiveSession Server1,DC1,FS3
+    .EXAMPLE
+    Return all AD computers and pipe to retrieve all locally logged on users of these machines.
+    
     Get-ADComputer -Filter * | Get-ActiveSession
 
     #>
@@ -47,12 +54,9 @@
                 try {
 
                     $User = Invoke-Command -ComputerName $Computer -ErrorAction SilentlyContinue -ScriptBlock { [System.Security.Principal.WindowsIdentity]::GetCurrent().Name }
-                    $Properties = @{'ComputerName' = $Name
-                                    'Username' = $User.split("\")[0]
-                    }#try
-                }
+                }#try
                 catch [System.Exception] {
-                    Write-Warning "No remote sessions found"
+                    Write-Warning "No remote sessions found on $Computer"
                     break
                 }#catch [System.Exception]
                 catch{
@@ -79,9 +83,9 @@
                 $User = Get-CimInstance -ComputerName $Computer -ClassName Win32_ComputerSystem | Select-Object Username
 
                 #if ($null -eq $User.Username)
-                #>
+                
                 if ($null -eq $User.Username -or $Computer) {
-                    Write-Warning "No user found, if the user is connected via remote session try using the -Remotesession switch"
+                    Write-Warning "No local sessions found on $Computer, if the user is connected via remote session try using the -Remotesession switch"
 
                     break
 
@@ -101,5 +105,3 @@
 
     END {Write-Output $LoggedonUser}
 }#function Get-ActiveSession
-
-

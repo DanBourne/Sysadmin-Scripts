@@ -25,19 +25,19 @@ function Set-ServiceLogon {
         $Session = New-CimSession -SessionOption $option -ComputerName $Computer
 
         if ($PSBoundParameters.ContainsKey('NewUser')) {
-            $args = @{
+            $serviceargs = @{
                 'StartName'     = $NewUser;
                 'StartPassword' = $NewPassword
             }#args
         }#if ($PSBoundParameters.ContainsKey('NewUser'))
         else {
-            $args = @{'StartPassword' = $NewPassword }
+            $serviceargs = @{'StartPassword' = $NewPassword }
         }#else
 
         $params = @{'CimSession' = $Session
             'Methodname'         = 'Change'
             'Query'              = "SELECT * FROM Win32_Service WHERE Name = '$ServiceName'"
-            'Arguments'          = $args
+            'Arguments'          = $serviceargs
         }#$params
 
         $Return = Invoke-CimMethod @params

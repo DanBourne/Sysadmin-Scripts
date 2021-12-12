@@ -1,14 +1,21 @@
 function Set-ServiceLogon {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)]
+        [Parameter(Mandatory = $True,
+            ValueFromPipelineByPropertyName = $True)]
         [string]$ServiceName,
-        [Parameter(Mandatory = $True, ValueFromPipelineByPropertyName = $True)]
+
+        [Parameter(Mandatory = $True,
+            ValueFromPipelineByPropertyName = $True)]
         [string]$NewPassword,
+
         [Parameter(ValueFromPipelineByPropertyName = $True)]
         [string]$NewUser,
-        [Parameter(Mandatory = $True, ValueFromPipeline = $True)]
+
+        [Parameter(Mandatory = $True, 
+            ValueFromPipeline = $True)]
         [string]$Computername,
+
         [string]$ErrorLogFilePath
     )
 
@@ -18,19 +25,20 @@ function Set-ServiceLogon {
         $Session = New-CimSession -SessionOption $option -ComputerName $Computer
 
         if ($PSBoundParameters.ContainsKey('NewUser')) {
-            $args = @{'StartName' = $NewUser;
-                'StartPassword'   = $NewPassword
-            }
-        }
+            $args = @{
+                'StartName'     = $NewUser;
+                'StartPassword' = $NewPassword
+            }#args
+        }#if ($PSBoundParameters.ContainsKey('NewUser'))
         else {
             $args = @{'StartPassword' = $NewPassword }
-        }
+        }#else
 
         $params = @{'CimSession' = $Session
             'Methodname'         = 'Change'
             'Query'              = "SELECT * FROM Win32_Service WHERE Name = '$ServiceName'"
             'Arguments'          = $args
-        }
+        }#$params
 
         $Return = Invoke-CimMethod @params
 
@@ -38,14 +46,15 @@ function Set-ServiceLogon {
             0 { $Status = "Success" }
             22 { $Status = "Invalid Account Name" }
             Default { $Status = "Failed: $($Return.ReturnValue)" }
-        }
+        }#switch
 
-        $props = @{'ComputerName' = $Computer
-            'Status'              = $Status
-        }
-        $obj = New-Object -TypeName psobject -Property $props
+        $props = @{
+            'ComputerName' = $Computer
+            'Status'       = $Status
+        }#$props
+        $ServiceResult = New-Object -TypeName psobject -Property $props
 
-        Write-Output $obj
+        Write-Output $ServiceResult
 
         $Session | Remove-CimSession
 

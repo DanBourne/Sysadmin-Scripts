@@ -26,7 +26,7 @@ function Get-DCDiskInfo {
                         'Manufacturer'            = $CS.Manufacturer
                         'Model'                   = $CS.Model
                         'TotalPhysicalMemory(GB)' = $CS.TotalPhysicalMemory / 1GB
-                    }#try
+                    }#$Properties
 
                     New-Object -Type PSObject -Property $Properties
                 }#try

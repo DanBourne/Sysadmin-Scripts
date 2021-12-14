@@ -13,6 +13,9 @@
     .PARAMETER RemoteSession
     Use to specify remote RDP sessions.
 
+    .INPUTS
+    Get-ADComputer
+
     .EXAMPLE
     Get the active session on the local host.
 

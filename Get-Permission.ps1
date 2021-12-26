@@ -4,10 +4,16 @@ Function Get-Permission{
     # Params
     param
     (
-        [Parameter(Position=0, Mandatory = $True, HelpMessage="Provide server names", ValueFromPipeline = $true)] 
+        [Parameter(Position=0, 
+                    Mandatory = $True, 
+                    HelpMessage="Provide server names", 
+                    ValueFromPipeline = $true)] 
         $Servers,
     
-        [Parameter(Position=1, Mandatory = $False, HelpMessage="Provide path, for example c:\users", ValueFromPipeline = $true)]
+        [Parameter(Position=1, 
+                    Mandatory = $False, 
+                    HelpMessage="Provide path, for example c:\users",  
+                    ValueFromPipeline = $true)]
         $Path
     ) 
   
@@ -66,7 +72,7 @@ Function Get-Permission{
    
                         }
                 
-                        # Add custom object to our array
+                        # Add custom object to the array
                         $Array += $Object
                     }
                 }

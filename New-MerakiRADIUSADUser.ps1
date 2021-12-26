@@ -26,7 +26,10 @@ Provide an email suffix, without the @. e.g. gmail.com
 Using this depends on whether your domain requires it or not. I have left it non-mandatory.
 
 .PARAMETER Path
-Path to the OU used for RADIUS clients. Provide this within "" e.g. ""
+Path to the OU used for RADIUS clients. Provide this within "" e.g. "OU=RADIUSClients,DC=contoso,DC=com"
+
+.PARAMETER Group
+Name of the group used for RADIUS authentication, configured on NPS. 
 
 .INPUTS
 Import-CSV
@@ -43,22 +46,32 @@ https://documentation.meraki.com/MS/Access_Control/Configuring_Microsoft_NPS_for
 [CMDLetBinding()]
 param
 (
-    [parameter(Mandatory = $True, 
+    [parameter(Position=0,
+                Mandatory = $True, 
+                HelpMessage="Provide a MAC Address",
                 ValueFromPipelineByPropertyName = $True)]
     [string]$MACAddress,
 
-    [parameter(Mandatory = $True,
+    [parameter(Position=1,
+                Mandatory = $True,
+                HelpMessage="Provide a name to identify the device in AD",
                 ValueFromPipelineByPropertyName = $True)]
     [string]$Name,
 
-    [parameter(ValueFromPipelineByPropertyName = $True)]
+    [parameter(Position=2,
+                HelpMessage="Enter the email suffix for the user, e.g. contoso.com",
+                ValueFromPipelineByPropertyName = $True)]
     [string]$EmailSuffix,
 
-    [parameter(Mandatory = $True, 
+    [parameter(Position=3,
+                Mandatory = $True,
+                HelpMessage = "Enter the OU path used for RADIUS clients, e.g. 'OU=RADIUSClients,DC=contoso,DC=com'", 
                 ValueFromPipelineByPropertyName = $True)]
     [string]$Path,
 
-    [parameter(ValueFromPipelineByPropertyName = $True)]
+    [parameter(Position=4,
+                HelpMessage="Enter the group used for RADIUS clients set up in NPS",
+                ValueFromPipelineByPropertyName = $True)]
     [string]$Group
         
 )#param

@@ -2,18 +2,18 @@ function Set-ServiceLogon {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $True,
-            ValueFromPipelineByPropertyName = $True)]
+                    ValueFromPipelineByPropertyName = $True)]
         [string]$ServiceName,
 
         [Parameter(Mandatory = $True,
-            ValueFromPipelineByPropertyName = $True)]
+                    ValueFromPipelineByPropertyName = $True)]
         [string]$NewPassword,
 
         [Parameter(ValueFromPipelineByPropertyName = $True)]
         [string]$NewUser,
 
         [Parameter(Mandatory = $True, 
-            ValueFromPipeline = $True)]
+                    ValueFromPipeline = $True)]
         [string]$Computername,
 
         [string]$ErrorLogFilePath
